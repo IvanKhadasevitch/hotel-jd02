@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+
+
+    <!--H2 persistence unit-->
+    <persistence-unit name="by.ivan.test_h2" transaction-type="RESOURCE_LOCAL">
+    <!-- add classes -->
+        <!--pojos-->
+        <class>pojos.User</class>
+        <class>pojos.Admin</class>
+        <class>pojos.Hotel</class>
+        <class>pojos.RoomType</class>
+        <class>pojos.Room</class>
+        <class>pojos.Order</class>
+        <class>pojos.Bill</class>
+
+        <!--entitiesForTest-->
+        <!--<class>entitiesForTest.PersonLockVersion</class>-->
+
+
+
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+    <properties>
+        <!-- Configuring JDBC properties -->
+        <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:create.sql'\;RUNSCRIPT FROM 'classpath:data.sql'"/>-->
+        <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:h2_test;MVCC=true;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:create.sql'\;RUNSCRIPT FROM 'classpath:data.sql'"/>-->
+        <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:h2_test;MVCC=true;DB_CLOSE_DELAY=-1"/>
+        <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+
+        <!-- Hibernate properties -->
+        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+        <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
+        <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+        <property name="hibernate.hbm2ddl.auto" value="create"/>
+
+        <property name="hibernate.format_sql" value="false"/>
+        <property name="hibernate.show_sql" value="true"/>
+
+        <!--set transaction isolation level-->
+        <!--2 изоляция уровня чтения подтвержденного-->
+        <!--2 => JDBC isolation level: READ_COMMITTED-->
+        <property name="hibernate.connection.isolation" value="2"/>
+
+        <!--set Naming Stratigy-->
+        <!--<property name="hibernate.physical_naming_strategy" value="util.CustomPhysicalNamingStrategy"/>-->
+
+    </properties>
+</persistence-unit>
+
+
+    <!--log4jdbc + mySql  persistence unit-->
+    <persistence-unit name="by.ivan.spy" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- add classes -->
+        <!--pojos-->
+        <class>pojos.User</class>
+        <class>pojos.Admin</class>
+        <class>pojos.Hotel</class>
+        <class>pojos.RoomType</class>
+        <class>pojos.Room</class>
+        <class>pojos.Order</class>
+        <class>pojos.Bill</class>
+
+        <!--entitiesForTest-->
+        <!--<class>entitiesForTest.PersonLockVersion</class>-->
+        <!--<class>entitiesForTest.PersonLockAll</class>-->
+        <!--<class>entitiesForTest.PersonLockDirty</class>-->
+
+
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+        <properties>
+            <!--<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>-->
+            <property name="javax.persistence.jdbc.driver" value="net.sf.log4jdbc.DriverSpy"/>
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hotel_hibernate?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;autoReconnect=true&amp;useSSL=false&amp;characterEncoding=UTF-8"/>-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:log4jdbc:mysql://localhost:3306/hotel_jd02_test?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;autoReconnect=true&amp;useSSL=false&amp;characterEncoding=UTF-8"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="root"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>
+            <!--create-drop: drop the schema when the SessionFactory is closed explicitly,-->
+            <!--typically when the application is stopped USE for test-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+            <!--update: update the schema-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+
+            <!--<property name="hibernate.use_sql_comments" value="true"/>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.connection.pool_size" value="10"/>
+
+            <!--set transaction isolation level-->
+            <!--2 изоляция уровня чтения подтвержденного-->
+            <!--2 => JDBC isolation level: READ_COMMITTED-->
+            <property name="hibernate.connection.isolation" value="2"/>
+
+            <!--for hibernate cache level 2-->
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+            <!--true by Default -->
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <!--false by Default -->
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <!--second-level cache mappings-->
+            <property name="net.sf.ehcache.configurationResourceName" value="ehcache.xml"/>
+            <!--Hibernate мог хранить записи в понятном пользователю формате.-->
+            <property name="hibernate.cache.use_structured_entries" value="true"/>
+
+            <!--set Naming Strategy-->
+            <!--<property name="hibernate.physical_naming_strategy" value="util.CustomPhysicalNamingStrategy"/>-->
+        </properties>
+    </persistence-unit>
+
+</persistence>

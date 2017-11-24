@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+             http://www.springframework.org/schema/security
+             http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+    <http auto-config="true">
+        <!--<intercept-url pattern="/" access="permitAll"/>-->
+        <intercept-url pattern="/booking/page" access="permitAll"/>
+        <intercept-url pattern="/booking/login-user/page" access="permitAll"/>
+        <intercept-url pattern="/booking/welcome-user/page" access="permitAll"/>
+        <intercept-url pattern="/booking/login-admin/page" access="permitAll"/>
+
+        <!--<intercept-url pattern="/orders_admin/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_GRAND_USER')"/>-->
+
+        <!--user navigation part-->
+        <intercept-url pattern="/orders_user/**" access="hasAuthority('SIMPLE_USER')"/>
+        <intercept-url pattern="/bills_user/**" access="hasAuthority('SIMPLE_USER')"/>
+
+        <!--admin navigation part-->
+        <intercept-url pattern="/orders_admin/**" access="hasAuthority('ADMIN')"/>
+        <intercept-url pattern="/bills_admin/**" access="hasAuthority('ADMIN')"/>
+
+        <!-- access denied page -->
+        <!--<access-denied-handler error-page="/403" />-->
+        <access-denied-handler error-page="/login-user/page" />
+
+        <logout invalidate-session="true" logout-url="/logout" logout-success-url="/page"/>
+
+        <form-login login-page="/login-user/page" />
+
+        <csrf disabled="true"/>
+    </http>
+
+    <!--<authentication-manager>-->
+        <!--<authentication-provider user-service-ref="authService"/>-->
+    <!--</authentication-manager>-->
+    <!--<beans:bean id="authService" class="by.it.academy.services.auth.AuthenticationService"/>-->
+
+    <authentication-manager>
+          <!--<authentication-provider user-service-ref="myAauthService"/>-->
+    </authentication-manager>
+    <!--<beans:bean id="myAuthService" class="auth.MyAuthenticationManager"/>-->
+
+</beans:beans>

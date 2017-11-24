@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <!--общий Tiles шаблон для всех jspx страниц отображения. Все страницы
+        будут формироваться через template=WEB-INF/view/layouts/default.jspx -->
+    <definition name="default" template="/WEB-INF/view/layouts/default.jspx">
+        <put-attribute name="title" value="MVC"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
+    </definition>
+
+    <!--add by me   HOME PAGE-->
+    <definition name="hotels/main" extends="default">
+        <put-attribute name="title" value="Hotels"/>
+        <put-attribute name="body" value="/WEB-INF/view/hotel/main.jspx"/>
+    </definition>
+
+    <!--user part-->
+    <definition name="login_user/page" extends="default">
+        <put-attribute name="title" value="Login user"/>
+        <put-attribute name="body" value="/WEB-INF/view/welcome/login-user.jspx"/>
+    </definition>
+
+    <definition name="welcome_user/page" extends="default">
+        <put-attribute name="title" value="Welcome user"/>
+        <put-attribute name="body" value="/WEB-INF/view/welcome/welcome-user.jspx"/>
+    </definition>
+
+    <definition name="orders_user/main" extends="default">
+        <put-attribute name="title" value="Orders user"/>
+        <put-attribute name="body" value="/WEB-INF/view/order/user/main.jspx"/>
+    </definition>
+
+    <definition name="orders_user/showOrder" extends="default">
+        <put-attribute name="title" value="Show user order "/>
+        <put-attribute name="body" value="/WEB-INF/view/order/user/showOrder.jspx"/>
+    </definition>
+
+    <definition name="orders_user/lookOrders" extends="default">
+        <put-attribute name="title" value="Look user orders "/>
+        <put-attribute name="body" value="/WEB-INF/view/order/user/lookOrders.jspx"/>
+    </definition>
+
+    <definition name="bills_user/main" extends="default">
+        <put-attribute name="title" value="Bills user"/>
+        <put-attribute name="body" value="/WEB-INF/view/bill/user/main.jspx"/>
+    </definition>
+
+    <!--admin part-->
+    <definition name="login_admin/page" extends="default">
+        <put-attribute name="title" value="Login admin"/>
+        <put-attribute name="body" value="/WEB-INF/view/welcome/login-admin.jspx"/>
+    </definition>
+
+    <definition name="orders_admin/main" extends="default">
+        <put-attribute name="title" value="Orders admin"/>
+        <put-attribute name="body" value="/WEB-INF/view/order/admin/main.jspx"/>
+    </definition>
+
+    <definition name="bills_admin/main" extends="default">
+        <put-attribute name="title" value="Bills admin"/>
+        <put-attribute name="body" value="/WEB-INF/view/bill/admin/main.jspx"/>
+    </definition>
+
+</tiles-definitions>
+

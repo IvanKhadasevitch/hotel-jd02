@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+      xmlns:spring="http://www.springframework.org/tags"
+      xmlns:s="http://www.springframework.org/tags/form"
+      xmlns:tiles="http://tiles.apache.org/tags-tiles">
+
+<jsp:output doctype-public="-//W3C//DTD XHTML 1.1//EN"
+            doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
+            doctype-root-element="html" omit-xml-declaration="false"/>
+<jsp:directive.page pageEncoding="UTF-8" contentType="text/html; UTF-8"/>
+
+
+<div class="container-fluid">
+    <div class="col-md-12 tableHeader"><spring:message code="page.bills.title"/></div>
+
+    <c:url var="billTypeChoiceUrl" value="/bills_admin/page" />
+    <form class="form-inline" id="billTypeChoice" action="${billTypeChoiceUrl}" method = "post">
+        <label class="radio-inline"><input type="radio" name="billStatus" value="UNPAID"/> <spring:message code="bills.statusUnPaid"/>.</label>
+        <label class="radio-inline"><input type="radio" name="billStatus" value="PAID"/> <spring:message code="bills.statusPaid"/>.</label>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default"><spring:message code="bills_user.submit"/></button>
+        </div>
+    </form>
+
+    <table class="table table-striped table-hover table-condensed">
+        <tr>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.billId"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.status"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="orders.orderId"/></th>
+            <th class="col-md-2 gumHeader"><spring:message code="bills.guestName"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.roomType"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.roomNumber"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.arrivalDate"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.eventsDate"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.room.price"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.total"/></th>
+            <th class="col-md-1 gumHeader"><spring:message code="bills.price.currency"/></th>
+        </tr>
+            <c:forEach var="bill" items="${requestScope.billList}" varStatus="status">
+<!--*************************************************************************************************************************            -->
+                <!--guest has not yet settled in the hotel-->
+                <!--<c:if test="${requestScope.currentDate.toLocalDate().isBefore(bill.getArrivalDate().toLocalDate())}">-->
+                    <!--<tr class="info gumRow">-->
+                        <!--<td class="col-md-1 Center">${bill.id}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.status}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.order.id}</td>-->
+                        <!--<td class="col-md-2 Left">${bill.user.fullName}</td>-->
+                        <!--<td class="col-md-1 Left">${bill.room.roomType.name}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.room.number}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.arrivalDate}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.eventsDate}</td>-->
+                        <!--<td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>-->
+                        <!--<td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>-->
+                        <!--<td class="col-md-1 Left">${bill.room.roomType.currency}</td>-->
+                    <!--</tr>-->
+                <!--</c:if>-->
+
+                <!--guest lives in a hotel-->
+                <!--<c:if test="${ (requestScope.currentDate.toLocalDate().isEqual(bill.getArrivalDate().toLocalDate()) or requestScope.currentDate.toLocalDate().isAfter(bill.getArrivalDate().toLocalDate()) ) and requestScope.currentDate.toLocalDate().isBefore(bill.getEventsDate().toLocalDate())}">-->
+                    <!--<tr class="info gumRow Current">-->
+                        <!--<td class="col-md-1 Center">${bill.id}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.status}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.order.id}</td>-->
+                        <!--<td class="col-md-2 Left">${bill.user.fullName}</td>-->
+                        <!--<td class="col-md-1 Left">${bill.room.roomType.name}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.room.number}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.arrivalDate}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.eventsDate}</td>-->
+                        <!--<td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>-->
+                        <!--<td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>-->
+                        <!--<td class="col-md-1 Left">${bill.room.roomType.currency}</td>-->
+                    <!--</tr>-->
+                <!--</c:if>-->
+
+                <!--The time has expired. Guest left the hotel-->
+                <!--<c:if test="${requestScope.currentDate.toLocalDate().isEqual(bill.getEventsDate().toLocalDate())}">-->
+                    <!--<tr class="info gumRow Expired">-->
+                        <!--<td class="col-md-1 Center">${bill.id}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.status}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.order.id}</td>-->
+                        <!--<td class="col-md-2 Left">${bill.user.fullName}</td>-->
+                        <!--<td class="col-md-1 Left">${bill.room.roomType.name}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.room.number}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.arrivalDate}</td>-->
+                        <!--<td class="col-md-1 Center">${bill.eventsDate}</td>-->
+                        <!--<td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>-->
+                        <!--<td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>-->
+                        <!--<td class="col-md-1 Left">${bill.room.roomType.currency}</td>-->
+                    <!--</tr>-->
+                <!--</c:if>-->
+<!--*************************************************************************************************************************            -->
+                <!-- bill has status PAID -->
+                <c:if test="${'PAID' eq (bill.getStatus().toString())}">
+                    <c:choose>
+                        <!-- guest lives in a hotel -->
+                        <c:when test="${ requestScope.currentDate.toLocalDate().isAfter(bill.getArrivalDate().toLocalDate().minusDays(1))  and requestScope.currentDate.toLocalDate().isBefore(bill.getEventsDate().toLocalDate().plusDays(1))}">
+                            <!--green color-->
+                            <tr class="info gumRow Current">
+                                <td class="col-md-1 Center">${bill.id}</td>
+                                <td class="col-md-1 Center">${bill.status}</td>
+                                <td class="col-md-1 Center">${bill.order.id}</td>
+                                <td class="col-md-2 Left">${bill.user.fullName}</td>
+                                <td class="col-md-1 Center">${bill.room.roomType.name}</td>
+                                <td class="col-md-1 Center">${bill.room.number}</td>
+                                <td class="col-md-1 Center">${bill.arrivalDate}</td>
+                                <td class="col-md-1 Center">${bill.eventsDate}</td>
+                                <td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-1 Left">${bill.room.roomType.currency}</td>
+                            </tr>
+                        </c:when>
+                        <!--guest has not yet settled in the hotel OR The time has expired. Guest left the hotel-->
+                        <c:otherwise>
+                            <!--black color-->
+                            <tr class="info gumRow">
+                                <td class="col-md-1 Center">${bill.id}</td>
+                                <td class="col-md-1 Center">${bill.status}</td>
+                                <td class="col-md-1 Center">${bill.order.id}</td>
+                                <td class="col-md-2 Left">${bill.user.fullName}</td>
+                                <td class="col-md-1 Center">${bill.room.roomType.name}</td>
+                                <td class="col-md-1 Center">${bill.room.number}</td>
+                                <td class="col-md-1 Center">${bill.arrivalDate}</td>
+                                <td class="col-md-1 Center">${bill.eventsDate}</td>
+                                <td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-1 Left">${bill.room.roomType.currency}</td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+                <!-- bill has status UNPAID -->
+                <c:if test="${'UNPAID' eq (bill.getStatus().toString())}">
+                    <c:choose>
+                        <!--guest has not yet settled in the hotel-->
+                        <c:when test="${requestScope.currentDate.toLocalDate().isBefore(bill.getArrivalDate().toLocalDate())}">
+                            <!--black color-->
+                            <tr class="info gumRow">
+                                <td class="col-md-1 Center">${bill.id}</td>
+                                <td class="col-md-1 Center">${bill.status}</td>
+                                <td class="col-md-1 Center">${bill.order.id}</td>
+                                <td class="col-md-2 Left">${bill.user.fullName}</td>
+                                <td class="col-md-1 Center">${bill.room.roomType.name}</td>
+                                <td class="col-md-1 Center">${bill.room.number}</td>
+                                <td class="col-md-1 Center">${bill.arrivalDate}</td>
+                                <td class="col-md-1 Center">${bill.eventsDate}</td>
+                                <td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-1 Left">${bill.room.roomType.currency}</td>
+                            </tr>
+                        </c:when>
+                        <!--guest lives in a hotel OR The time has expired. Guest left the hotel-->
+                        <c:otherwise>
+                            <!--red color-->
+                            <tr class="info gumRow Expired">
+                                <td class="col-md-1 Center">${bill.id}</td>
+                                <td class="col-md-1 Center">${bill.status}</td>
+                                <td class="col-md-1 Center">${bill.order.id}</td>
+                                <td class="col-md-2 Left">${bill.user.fullName}</td>
+                                <td class="col-md-1 Center">${bill.room.roomType.name}</td>
+                                <td class="col-md-1 Center">${bill.room.number}</td>
+                                <td class="col-md-1 Center">${bill.arrivalDate}</td>
+                                <td class="col-md-1 Center">${bill.eventsDate}</td>
+                                <td class="col-md-1 Right"><fmt:formatNumber value="${bill.room.roomType.price / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-2 Right"><fmt:formatNumber value="${bill.total / 100}" minFractionDigits="2" maxFractionDigits="2" type="number"/></td>
+                                <td class="col-md-1 Left">${bill.room.roomType.currency}</td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+
+            </c:forEach>
+
+    </table>
+</div>
+
+
+</html>
